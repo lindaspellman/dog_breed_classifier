@@ -2,9 +2,18 @@
 # DONE - size col to combine approx. height and weight - tiny, small, medium, large, giant (for user) - 1 through 5 (for neural network)
 # !!!!!!!!!!!!!!!!
 # research how/where tensorflow models can output predictions associated with truth. Find the file which lists the ordinal values for each image in image classifiers
+#%%
+
 
 #%%
 import pandas as pd
+# import tensorflow as tf
+# from tensorflow import keras
+# from keras.models import Sequential
+# from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
+# from keras.preprocessing.image import ImageDataGenerator
+import matplotlib.pyplot as plt
+import numpy as np
 #%%
 dog_breeds = pd.read_csv('C:\\Users\\Linda\\OneDrive\\Desktop\\BYUI\\2024_Spring_Senior_Project\\dog_breed_classifier\\dataset\\breeds.csv')
 
@@ -23,8 +32,9 @@ dog_breeds.head()
 dog_breeds.columns
 
 #%%
-unique_heights = len(dog_breeds['height'].unique())
-unique_heights
+# unique_heights = 
+# len(dog_breeds['height'].unique())
+# unique_heights
 
 #%%
 # Define a function to apply the case when logic
@@ -57,3 +67,8 @@ dog_breeds['size'] = dog_breeds['height_in'].apply(apply_case_when)
 # associate ordinals/standard ranges with numbers 1,2,3,...
 # assign dogs to closest range
 # HAVE A WORKING MODEL THIS WEEK TO NEXT WEEK
+
+##############################################
+
+# The CNN
+
