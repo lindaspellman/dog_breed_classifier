@@ -40,13 +40,13 @@ column_count = len(dog_breeds.columns)
 column_count
 
 #%%
-no_headers = pd.read_csv('C:\\Users\\Linda\\OneDrive\\Desktop\\BYUI\\2024_Spring_Senior_Project\\dog_breed_classifier\\dataset\\breeds.csv', header=None)
-# Drop the first row
-no_headers = no_headers.drop(0)
-# Reset the index if needed
-no_headers = no_headers.reset_index(drop=True)
-no_headers = no_headers.drop(no_headers.columns[[0,1,2,34,35,36,37,38]], axis=1)
-no_headers
+# no_headers = pd.read_csv('C:\\Users\\Linda\\OneDrive\\Desktop\\BYUI\\2024_Spring_Senior_Project\\dog_breed_classifier\\dataset\\breeds.csv', header=None)
+# # Drop the first row
+# no_headers = no_headers.drop(0)
+# # Reset the index if needed
+# no_headers = no_headers.reset_index(drop=True)
+# no_headers = no_headers.drop(no_headers.columns[[0,1,2,34,35,36,37,38]], axis=1)
+# no_headers
 # figure out how to display no_headers without the numbered column names
 
 #%%
@@ -145,11 +145,9 @@ from sklearn.preprocessing import StandardScaler
 
 # prob with data: only one example of each dog breed. Given testing data random inputs for dog breeds to be returned on?
 # need only one friendly column, ect, so it won't overwhelm size column. Or weight size more?
-len(y)
-#%%
+# len(y)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5)
-len(X_train)
-#%%
+# len(X_train)
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
@@ -161,9 +159,10 @@ X_test_scaled = scaler.transform(X_test)
 # Create the model and train it, use default hyperparameters for now
 # Define the model
 model = tf.keras.Sequential([
-    tf.keras.layers.Dense(dog_breed_features.shape[1], activation='relu'), 
-    tf.keras.layers.Dense(256, activation='relu'),
-    tf.keras.layers.Dense(num_breeds, activation='softmax')
+    tf.keras.layers.Dense(dog_breed_features.shape[1], activation='relu')
+    ,tf.keras.layers.Dense(256, activation='relu')
+    ,tf.keras.layers.Dense(num_breeds, activation='softmax')
+    ,tf.keras.layers.Dense(num_breeds, activation='softmax')
     ])
 # show to teacher and tutors - ask for help
 # explain how data is one sample per dog breed - 358 samples - train on that and have network converge on answering the question - doubled samples and split in half for training and testing
@@ -203,6 +202,8 @@ print("Predicted Index:")
 for prediction in predictions:
     print(prediction)
 
-# %%
+
+
+
 
 
