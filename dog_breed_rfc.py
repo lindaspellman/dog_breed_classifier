@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 import numpy as np
+import joblib
 
 #%%
 dog_breeds = pd.read_csv('C:\\Users\\Linda\\OneDrive\\Desktop\\BYUI\\2024_Spring_Senior_Project\\dog_breed_classifier\\dataset\\breeds.csv')
@@ -20,52 +21,55 @@ dog_breeds['both_family_kid_friendliness'] = dog_breeds[['b1_affectionate_with_f
 ##########################################################################################
 
 #%%
-dog_breed_features = np.array(dog_breeds)
+# dog_breed_features = np.array(dog_breeds)
 
-num_breeds = int(len(dog_breeds) / 2)
-breed_labels = {} 
-for i in range(num_breeds):
-    column = [0] * (num_breeds * 2)
-    column[i] = 1 
-    column[i + num_breeds] = 1
-    breed_labels[i] = column
+# num_breeds = int(len(dog_breeds) / 2)
+# breed_labels = {} 
+# for i in range(num_breeds):
+#     column = [0] * (num_breeds * 2)
+#     column[i] = 1 
+#     column[i + num_breeds] = 1
+#     breed_labels[i] = column
     
-breed_labels = pd.DataFrame(breed_labels)
+# breed_labels = pd.DataFrame(breed_labels)
 
 #######################################################################################
 
 
 # %%
-X = dog_breeds[['a_adaptability'
-                ,'a1_adapts_well_to_apartment_living'
+X = dog_breeds[[#'a_adaptability'
+                # ,
+                'a1_adapts_well_to_apartment_living'
                 ,'a2_good_for_novice_owners'
                 ,'a3_sensitivity_level'
                 ,'a4_tolerates_being_alone'
-                # ,'a5_tolerates_cold_weather'
-                # ,'a6_tolerates_hot_weather'
-                # ,'b3_dog_friendly'
-                # ,'b4_friendly_toward_strangers'
+                ,'a5_tolerates_cold_weather'
+                ,'a6_tolerates_hot_weather'
+                ,'b3_dog_friendly'
+                ,'b4_friendly_toward_strangers'
                 # ,'c_health_grooming'
-                # ,'c1_amount_of_shedding'
-                # ,'c2_drooling_potential'
-                # ,'c3_easy_to_groom'
-                # ,'c4_general_health'
-                # ,'c5_potential_for_weight_gain'
-                # ,'d_trainability'
-                # ,'d1_easy_to_train'
-                # ,'d2_intelligence'
-                # ,'d3_potential_for_mouthiness'
-                # ,'d4_prey_drive'
-                # ,'d5_tendency_to_bark_or_howl'
-                # ,'d6_wanderlust_potential'
-                # ,'e_exercise_needs','e1_energy_level'
-                # ,'e2_intensity'
-                # ,'e3_exercise_needs'
-                # ,'e4_potential_for_playfulness'
-                # ,'both_family_kid_friendliness'
-                # ,'size'
+                ,'c1_amount_of_shedding'
+                ,'c2_drooling_potential'
+                ,'c3_easy_to_groom'
+                ,'c4_general_health'
+                ,'c5_potential_for_weight_gain'
+                #,'d_trainability'
+                ,'d1_easy_to_train'
+                ,'d2_intelligence'
+                ,'d3_potential_for_mouthiness'
+                ,'d4_prey_drive'
+                ,'d5_tendency_to_bark_or_howl'
+                ,'d6_wanderlust_potential'
+                # ,'e_exercise_needs'
+                ,'e1_energy_level'
+                ,'e2_intensity'
+                ,'e3_exercise_needs'
+                ,'e4_potential_for_playfulness'
+                ,'both_family_kid_friendliness'
+                ,'size'
                 ]]
-
+#%%
+X.head()
 #%%
 # y = breed_labels
 y = dog_breeds['breed']
@@ -112,3 +116,4 @@ print('Confusion Matrix:')
 print(confusion_matrix(y_test, y_pred))
 
 # %%
+joblib.dump(rf_classifier, 'model.pkl')
