@@ -7,11 +7,12 @@ from sklearn.metrics import accuracy_score
 
 #%%
 # Load your dataset
-data = pd.read_csv('dog_breeds.csv')  # Replace with your actual dataset path
+dog_breeds = pd.read_csv('C:\\Users\\Linda\\OneDrive\\Desktop\\BYUI\\2024_Spring_Senior_Project\\dog_breed_classifier\\dataset\\breeds.csv')
+
 
 # Assume the last column is the target (dog breed) and others are features
-X = data.iloc[:, :-1].values
-y = data.iloc[:, -1].values
+X = dog_breeds.iloc[:, :-1].values
+y = dog_breeds.iloc[:, -1].values
 
 # Encode the target labels to numeric values
 label_encoder = LabelEncoder()
