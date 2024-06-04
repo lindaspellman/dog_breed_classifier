@@ -8,11 +8,44 @@ from sklearn.metrics import accuracy_score
 #%%
 # Load your dataset
 dog_breeds = pd.read_csv('C:\\Users\\Linda\\OneDrive\\Desktop\\BYUI\\2024_Spring_Senior_Project\\dog_breed_classifier\\dataset\\breeds.csv')
-
+dog_breeds['both_family_kid_friendliness'] = dog_breeds[['b1_affectionate_with_family','b2_incredibly_kid_friendly_dogs']].mean(axis=1)
 
 # Assume the last column is the target (dog breed) and others are features
-X = dog_breeds.iloc[:, :-1].values
-y = dog_breeds.iloc[:, -1].values
+# X = dog_breeds.iloc[:, :-1].values
+X = dog_breeds[[#'a_adaptability'
+                # ,
+                'a1_adapts_well_to_apartment_living'
+                ,'a2_good_for_novice_owners'
+                ,'a3_sensitivity_level'
+                ,'a4_tolerates_being_alone'
+                ,'a5_tolerates_cold_weather'
+                ,'a6_tolerates_hot_weather'
+                ,'b3_dog_friendly'
+                ,'b4_friendly_toward_strangers'
+                # ,'c_health_grooming'
+                ,'c1_amount_of_shedding'
+                ,'c2_drooling_potential'
+                ,'c3_easy_to_groom'
+                ,'c4_general_health'
+                ,'c5_potential_for_weight_gain'
+                #,'d_trainability'
+                ,'d1_easy_to_train'
+                ,'d2_intelligence'
+                ,'d3_potential_for_mouthiness'
+                ,'d4_prey_drive'
+                ,'d5_tendency_to_bark_or_howl'
+                ,'d6_wanderlust_potential'
+                # ,'e_exercise_needs'
+                ,'e1_energy_level'
+                ,'e2_intensity'
+                ,'e3_exercise_needs'
+                ,'e4_potential_for_playfulness'
+                ,'both_family_kid_friendliness'
+                ,'size'
+                ]]
+# y = dog_breeds.iloc[:, -1].values
+y = dog_breeds['breed']
+
 
 # Encode the target labels to numeric values
 label_encoder = LabelEncoder()
@@ -60,9 +93,17 @@ predicted_breeds = label_encoder.inverse_transform(preds.astype(int))
 # Save the model
 bst.save_model('xgboost_dog_breeds.model')
 
+#%%
 # Load the model
 bst_loaded = xgb.Booster()
 bst_loaded.load_model('xgboost_dog_breeds.model')
 
 # Use the loaded model to make predictions
 preds_loaded = bst_loaded.predict(dtest)
+# %%
+len(preds_loaded)
+# %%
+dog_breeds['predictions'] = preds_loaded
+dog_breeds.head() # LAST CELL RUN FOR THE ERROR
+
+# %%
