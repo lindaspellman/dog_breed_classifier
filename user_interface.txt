@@ -28,7 +28,7 @@ How many dogs have you owned by this point in your life?
 # a5_tolerates_cold_weather
 # Do you live in a cold climate or experience cold weather often or most of the year? (Under a certain amount of degrees F or C???)
 
-# a5_tolerates_hot_weather
+# a6_tolerates_hot_weather
 # Do you live in a hot climate or experience hot weather often or most of the year? (Over a certain amount of degrees F or C???)
 
 # both_family_kid_friendliness
@@ -80,7 +80,7 @@ How many dogs have you owned by this point in your life?
 # 
 
 # e_exercise_needs
-# Are you willing to spend a lot of time walking your dog or would you prefer short of no periods of exercise?
+
 
 # e1_energy_level
 # Do you want a high-energy dog or a low-energy dog?
@@ -89,9 +89,10 @@ How many dogs have you owned by this point in your life?
 #
 
 # e3_exercise_needs
-#
+# Are you willing to spend a lot of time walking your dog or would you prefer short or no periods of exercise?
 
 # e4_potential_for_playfulness
+#
 
 # size
 # What size of dog do you want?: Tiny, Small, Medium, Large, Giant
