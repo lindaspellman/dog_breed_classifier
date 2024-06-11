@@ -2,9 +2,11 @@
 
 import os
 # import dog_breed_rfc
-# from dog_breed_rfc import predict_optimal_dog_breeds
+# from dog_breed_rfc import orig_dog_breeds
 import joblib
 import numpy as np
+import pandas as pd
+import random
 
 #%%
 try:
@@ -72,7 +74,7 @@ intelligence = st.slider("On a scale of 1-5, do you want a more intelligent dog,
 # d3_potential_for_mouthiness
 mouthiness = st.slider("On a scale of 1-5, would you prefer a naturally non-mouthy dog or are you willing to put up with mouthiness/train your dog to not be mouthy?",1,5,3)
 # d4_prey_drive
-prey_drive = st.slider("On a scale of 1-5, do you want a dog who is given to a high prey drive and will easily give chase, or do you want a dog who does not care and wants to stay home? 1: Low prey drive. 5: High prey drive.", 1, 5, 3)
+prey_drive = st.slider("On a scale of 1-5, do you want a dog who is given to a high prey drive and will easily give chase, or do you want a dog who does not care? 1: Low prey drive. 5: High prey drive.", 1, 5, 3)
 # d5_tendency_to_bark_or_howl
 barking = st.slider("On a scale of 1-5, would you prefer a quiet dog or a loud dog? 1: Not prone to barking/howling. 5: Very prone to vocalizing.",1,5,3)
 # d6_wanderlust_potential
@@ -87,14 +89,50 @@ ex_needs = st.slider("On a scale of 1-5, how willing are you to spend a lot of t
 playfulness = st.slider("On a scale of 1-5, how interested are you in playing with your dog and how much time do you have to spend playing with your dog? Would you prefer a more playful dog or less playful dog? 1. Less playful. 5: More playful.",1,5,3)
 
 breed_recs = []
+breeds_original = pd.read_csv('C:\\Users\\Linda\\OneDrive\\Desktop\\BYUI\\2024_Spring_Senior_Project\\dog_breed_classifier\\dataset\\breeds_original.csv')
+
+def random_positive_or_negative(min_val, max_val):
+    # Generate a random integer between min_val and max_val
+    number = random.randint(min_val, max_val)
+
+    # Randomly choose a sign (either 1 or -1)
+    sign = random.choice([1, -1])
+    
+    # Combine the number and the sign
+    return number * sign
+
 
 submitted = st.button('Submit', key=1)
 if submitted:
-    st.write(f'Your top 5 dog breed recommendations for your lifestyle conditions are: ')
+    st.balloons()
+    st.write(f'Your dog breed recommendation is: ')
     # send all answers to the model
-    for i in range(0,4):
-        breed_rec = predict_optimal_dog_breeds(size, num_dogs_had, home_size, alone_dogs, sensitivity, cold_weather, hot_weather, child_friendly, dog_friendly, stranger_friendly, shedding_amount, drooling_potential, groom_ease, weight_gain_potential, trainability, intelligence, mouthiness, prey_drive, barking, wanderlust_potential, en_lvl, intensity, ex_needs, playfulness)
-        breed_recs.append(breed_rec)
+    # for i in range(1,6):
+    breed_rec = predict_optimal_dog_breeds(size, num_dogs_had, home_size, alone_dogs, sensitivity, cold_weather, hot_weather, child_friendly, dog_friendly, stranger_friendly, shedding_amount, drooling_potential, groom_ease, weight_gain_potential, trainability, intelligence, mouthiness, prey_drive, barking, wanderlust_potential, en_lvl, intensity, ex_needs, playfulness)
+    breed_recs.append(breed_rec)
+
+    breed_rec2 = predict_optimal_dog_breeds(size+random_positive_or_negative(-1,1), num_dogs_had+random_positive_or_negative(-1,1), home_size+random_positive_or_negative(-1,1), alone_dogs+random_positive_or_negative(-1,1), sensitivity+random_positive_or_negative(-1,1), cold_weather+random_positive_or_negative(-1,1), hot_weather+random_positive_or_negative(-1,1), child_friendly+random_positive_or_negative(-1,1), dog_friendly+random_positive_or_negative(-1,1), stranger_friendly+random_positive_or_negative(-1,1), shedding_amount+random_positive_or_negative(-1,1), drooling_potential+random_positive_or_negative(-1,1), groom_ease+random_positive_or_negative(-1,1), weight_gain_potential+random_positive_or_negative(-1,1), trainability+random_positive_or_negative(-1,1), intelligence+random_positive_or_negative(-1,1), mouthiness+random_positive_or_negative(-1,1), prey_drive+random_positive_or_negative(-1,1), barking+random_positive_or_negative(-1,1), wanderlust_potential+random_positive_or_negative(-1,1), en_lvl+random_positive_or_negative(-1,1), intensity+random_positive_or_negative(-1,1), ex_needs+random_positive_or_negative(-1,1), playfulness+random_positive_or_negative(-1,1))
+    breed_recs.append(breed_rec2)
+
+    breed_rec3 = predict_optimal_dog_breeds(size+random_positive_or_negative(-1,1), num_dogs_had+random_positive_or_negative(-1,1), home_size+random_positive_or_negative(-1,1), alone_dogs+random_positive_or_negative(-1,1), sensitivity+random_positive_or_negative(-1,1), cold_weather+random_positive_or_negative(-1,1), hot_weather+random_positive_or_negative(-1,1), child_friendly+random_positive_or_negative(-1,1), dog_friendly+random_positive_or_negative(-1,1), stranger_friendly+random_positive_or_negative(-1,1), shedding_amount+random_positive_or_negative(-1,1), drooling_potential+random_positive_or_negative(-1,1), groom_ease+random_positive_or_negative(-1,1), weight_gain_potential+random_positive_or_negative(-1,1), trainability+random_positive_or_negative(-1,1), intelligence+random_positive_or_negative(-1,1), mouthiness+random_positive_or_negative(-1,1), prey_drive+random_positive_or_negative(-1,1), barking+random_positive_or_negative(-1,1), wanderlust_potential+random_positive_or_negative(-1,1), en_lvl+random_positive_or_negative(-1,1), intensity+random_positive_or_negative(-1,1), ex_needs+random_positive_or_negative(-1,1), playfulness+random_positive_or_negative(-1,1))
+    breed_recs.append(breed_rec3)
+
+    # st.write(f'The rec: {breed_rec}')
+    breed_urls = []
+    for index, rec in enumerate(breed_recs):
+    # for rec in breed_rec:
+        st.write(f'{index+1}. {rec}')
+        condition = breeds_original['breed'] == str(rec)
+        breed_url = breeds_original.loc[condition, 'url']
+        # breed_urls.append(breed_url)
+        st.write(breed_url)
+    # for url in breed_urls:
+        # st.write(url)
+
+    st.write("Find information about this breed at the above url. Machine learning models can be wrong, so please research the breed recommendation as much as possible before adopting.")
+    # breed_urls.append(breed_url)
+    # for url in breed_urls:
+    # for url in breed_url:
+        # st.write(url)
         # if any of the recs in the list are the same, rerun the model. Basically, I want a set of unique recs.
-    for rec in breed_recs:
-        st.write(f'{rec}')
+    

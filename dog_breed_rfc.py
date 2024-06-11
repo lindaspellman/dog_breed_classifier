@@ -8,7 +8,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
-import numpy as np
+# import numpy as np
 import joblib
 
 #%%
@@ -131,6 +131,10 @@ print(classification_report(y_test, y_pred))
 # Print confusion matrix
 print('Confusion Matrix:')
 print(confusion_matrix(y_test, y_pred))
+
+################################
+# To Do: PUSH TO AND PULL FROM REMOTE???
+##################################
 
 # %%
 # len(y_pred)
