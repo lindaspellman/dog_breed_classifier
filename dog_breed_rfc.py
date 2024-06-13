@@ -34,7 +34,8 @@ dog_breeds['both_family_kid_friendliness'] = dog_breeds['both_family_kid_friendl
 # dog_breeds.info()
 # dog_breeds['size'].unique()
 # dog_breeds.head()
-len(dog_breeds.columns)
+# len(dog_breeds.columns)
+dog_breeds.columns
 
 ##########################################################################################
 
