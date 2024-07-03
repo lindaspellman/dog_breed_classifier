@@ -14,10 +14,14 @@ import joblib
 #%%
 # dog_breeds = pd.read_csv('C:\\Users\\Linda\\OneDrive\\Desktop\\BYUI\\2024_Spring_Senior_Project\\dog_breed_classifier\\dataset\\breeds.csv')
 synthetic_dog_breeds = pd.read_csv('C:\\Users\\Linda\\OneDrive\\Desktop\\BYUI\\2024_Spring_Senior_Project\\dog_breed_classifier\\dataset\\tabular-actgan-dog-breeds.csv')
-
+#%%
 orig_dog_breeds = pd.read_csv('C:\\Users\\Linda\\OneDrive\\Desktop\\BYUI\\2024_Spring_Senior_Project\\dog_breed_classifier\\dataset\\breeds_to_change.csv')
-
+#%%
 dog_breeds = pd.concat([orig_dog_breeds, synthetic_dog_breeds], ignore_index=True)
+
+#%%
+
+dog_breeds = orig_dog_breeds
 
 dog_breeds['both_family_kid_friendliness'] = dog_breeds[['b1_affectionate_with_family','b2_incredibly_kid_friendly_dogs']].mean(axis=1)
 
@@ -35,7 +39,7 @@ dog_breeds['both_family_kid_friendliness'] = dog_breeds['both_family_kid_friendl
 # dog_breeds['size'].unique()
 # dog_breeds.head()
 # len(dog_breeds.columns)
-dog_breeds.columns
+# dog_breeds.columns
 
 ##########################################################################################
 
@@ -88,8 +92,7 @@ X = dog_breeds[[##'a_adaptability'
                 ,'e2_intensity'
                 ,'e3_exercise_needs'
                 ,'e4_potential_for_playfulness'
-                ,
-                'both_family_kid_friendliness'
+                ,'both_family_kid_friendliness'
                 ,'size'
                 ]]
 
@@ -99,13 +102,15 @@ X = dog_breeds[[##'a_adaptability'
 y = dog_breeds['breed']
 
 #%%
-len(X.columns)
+# len(X.columns)
+
+
 #%%
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5)
 
 # Initialize the Random Forest classifier
-rf_classifier = RandomForestClassifier(n_estimators=256, random_state=42, warm_start=True)
-
+rf_classifier = RandomForestClassifier(n_estimators=500, random_state=42, warm_start=True)
+# n_estimators=256
 # Train the model
 rf_classifier.fit(X_train, y_train)
 
@@ -123,15 +128,15 @@ print(f'Accuracy: {accuracy}')
 
 #%%
 # Print classification report
-print('Classification Report:')
-print(classification_report(y_test, y_pred))
+# print('Classification Report:')
+# print(classification_report(y_test, y_pred))
 
 
 
 #%%
 # Print confusion matrix
-print('Confusion Matrix:')
-print(confusion_matrix(y_test, y_pred))
+# print('Confusion Matrix:')
+# print(confusion_matrix(y_test, y_pred))
 
 ################################
 # To Do: PUSH TO AND PULL FROM REMOTE???
@@ -139,8 +144,8 @@ print(confusion_matrix(y_test, y_pred))
 
 # %%
 # len(y_pred)
-predictions = pd.DataFrame(y_pred)
-predictions#.head()
+# predictions = pd.DataFrame(y_pred)
+# predictions#.head()
 #%%
 # dog_breeds_orig = pd.read_csv('C:\\Users\\Linda\\OneDrive\\Desktop\\BYUI\\2024_Spring_Senior_Project\\dog_breed_classifier\\dataset\\breeds_original.csv')
 
@@ -158,13 +163,24 @@ predictions#.head()
 # dog_breeds_first_half 
 #%%
 # dog_breeds['predictions'] = y_pred 
-dog_breeds['predictions'] = predictions 
+# dog_breeds['predictions'] = predictions 
 # dog_breeds_orig.head()
-dog_breeds[['breed','predictions']]
-# NEED TO FIX NANS IN predictions!!!
+# dog_breeds[['breed','predictions']]
 
 #%%
 # Showing which predictions were correct
-dog_breeds[dog_breeds['breed'] == dog_breeds['predictions']]
+# dog_breeds[dog_breeds['breed'] == dog_breeds['predictions']]
 # %%
 joblib.dump(rf_classifier, 'model.pkl')
+#%%
+joblib.dump(rf_classifier, 'orig_data_model.pkl')
+
+
+# %%
+temp_model = joblib.load('model.pkl')
+#%%
+other_temp_model = joblib.load('orig_data_model.pkl')
+print("hello model")
+# downgrade scikit-learn to 1.2.2
+# rerun training job to make sure it still works and that it works in test program and also the streamlit script
+# %%
