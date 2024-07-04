@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 import random
 from streamlit_extras.buy_me_a_coffee import button  # pip install streamlit-extras
+from sklearn.metrics import accuracy_score, log_loss
 
 #%%
 try:
@@ -21,22 +22,24 @@ custom_css = """
 <style>
     # USING ################################################
 
+    /* Change the background color of the app */
+    /* In first div under <div tabindex="-1"> */
+    .stApp {
+        # background-color: #003300;
+        # background-color: #ffe6ff;
+        background-color: #f2e6ff;
+    }
+
+    # NOT USING #############################################
+
     /* Change the font color of all streamlit text */
     * {
         # color: #ff6666;
         # color: #ff4d4d;
         # color: #ff1a1a;
         # color: #ffcc99;
+        color: #ffffff;
         }
-
-    /* Change the background color of the app */
-    /* In first div under <div tabindex="-1"> */
-    .stApp {
-        # background-color: #003300;
-        background-color: #0099ff;
-    }
-
-    # NOT USING #############################################
 
     /* changes the background color of the re-run ect developer bar at the top of the window which will not be shown after the application is deployed. Not useful for deployment. */
     /* In the first header within the above div */
@@ -73,10 +76,9 @@ custom_css = """
 
 # function to run model with user input
 # @st.cache_data
-def predict_optimal_dog_breeds(size, num_dogs_had, home_size, alone_dogs, sensitivity, cold_weather, hot_weather, child_friendly, dog_friendly, stranger_friendly, shedding_amount, drooling_potential, groom_ease, weight_gain_potential, trainability, intelligence, mouthiness, prey_drive, barking, wanderlust_potential, en_lvl, intensity, ex_needs, playfulness):
+def predict_optimal_dog_breeds(model, size, num_dogs_had, home_size, alone_dogs, sensitivity, cold_weather, hot_weather, child_friendly, dog_friendly, stranger_friendly, shedding_amount, drooling_potential, groom_ease, weight_gain_potential, trainability, intelligence, mouthiness, prey_drive, barking, wanderlust_potential, en_lvl, intensity, ex_needs, playfulness):
     data = np.array([[num_dogs_had, home_size, alone_dogs, sensitivity, cold_weather, hot_weather, dog_friendly, stranger_friendly, shedding_amount, drooling_potential, groom_ease, weight_gain_potential, trainability, intelligence, mouthiness, prey_drive, barking, wanderlust_potential, en_lvl, intensity, ex_needs, playfulness,size,child_friendly]])
     # model = joblib.load('model.pkl')
-    model = joblib.load('orig_data_model.pkl')
     prediction = model.predict(data)
     return prediction
 
@@ -91,7 +93,7 @@ def random_choice_between(num1, num2):
 
 def main():
     # Inject custom CSS with st.markdown function
-    # st.markdown(custom_css, unsafe_allow_html=True)
+    st.markdown(custom_css, unsafe_allow_html=True)
 
     from streamlit_extras.badges import badge  # pip install streamlit-extras
 
@@ -107,12 +109,12 @@ def main():
     default_slider_value = 3
 
     # Load the model
+    model = joblib.load('orig_data_model.pkl')
     
     st.title('Dog Breed Advisor')
     st.subheader('By: Linda Spellman')
     st.write('Welcome to the Dog Breed Advisor! Here, would-be dog-owners can input details about their lifestyle conditions and receive recommendations of dog breeds that may fit with their lives.')
-    st.write("My name is Linda Spellman. This Streamlit application constitutes my senior project as a Computer Science student at Brigham Young University - Idaho. The machine learning system uses RandomForestClassifier.")
-    st.write("If you like this application, please consider buying me a coffee. Thank you!")
+    st.write("My name is Linda Spellman. This Streamlit application constitutes my senior project as a Computer Science student at Brigham Young University - Idaho.")
     st.divider() 
 
     # size
@@ -183,7 +185,7 @@ def main():
         # st.balloons()
         st.write(f'Your dog breed recommendations are: ')
         # send all answers to the model
-        breed_rec = predict_optimal_dog_breeds(size, num_dogs_had, home_size, alone_dogs, sensitivity, cold_weather, hot_weather, child_friendly, dog_friendly, stranger_friendly, shedding_amount, drooling_potential, groom_ease, weight_gain_potential, trainability, intelligence, mouthiness, prey_drive, barking, wanderlust_potential, en_lvl, intensity, ex_needs, playfulness)
+        breed_rec = predict_optimal_dog_breeds(model, size, num_dogs_had, home_size, alone_dogs, sensitivity, cold_weather, hot_weather, child_friendly, dog_friendly, stranger_friendly, shedding_amount, drooling_potential, groom_ease, weight_gain_potential, trainability, intelligence, mouthiness, prey_drive, barking, wanderlust_potential, en_lvl, intensity, ex_needs, playfulness)
         # st.write(breed_rec)
         # breed_recs.append(breed_rec)
         # for rec in breed_recs:
@@ -200,7 +202,7 @@ def main():
         # st.write(breed_url)
 
         # for i in range(1,5):
-        breed_rec2 = predict_optimal_dog_breeds(size
+        breed_rec2 = predict_optimal_dog_breeds(model, size
                                             +random_choice_between(-1,1)
                                             , num_dogs_had
                                             +random_choice_between(-1,1)
@@ -232,7 +234,7 @@ def main():
         breed_url2 = breeds_original.loc[condition, 'url']
 
         # third breed recommendation
-        breed_rec3 = predict_optimal_dog_breeds(size
+        breed_rec3 = predict_optimal_dog_breeds(model, size
                                             +random_choice_between(-1,1)
                                             , num_dogs_had
                                             +random_choice_between(-1,1)
@@ -263,7 +265,7 @@ def main():
         breed_url3 = breeds_original.loc[condition, 'url']
 
         # fourth breed recommendation
-        breed_rec4 = predict_optimal_dog_breeds(size
+        breed_rec4 = predict_optimal_dog_breeds(model, size
                                             +random_choice_between(-1,1)
                                             , num_dogs_had
                                             +random_choice_between(-1,1)
@@ -294,7 +296,7 @@ def main():
         breed_url4 = breeds_original.loc[condition, 'url']
 
         # fifth breed recommendation
-        breed_rec5 = predict_optimal_dog_breeds(size
+        breed_rec5 = predict_optimal_dog_breeds(model, size
                                             +random_choice_between(-1,1)
                                             , num_dogs_had
                                             +random_choice_between(-1,1)
@@ -368,6 +370,45 @@ def main():
 
         st.write("Find information about these breeds at the above urls. Machine learning models can be wrong, so please research the breeds as much as possible before adopting. Please adopt, don't shop!")
         # if any of the recs in the list are the same, rerun the model. Basically, I want a set of unique recs.
+        st.write("If you like this application, please consider buying me a coffee. Thank you!")
+
+        model_ref = model['model']
+        accuracies = model['accuracies']
+        losses = model['losses']
+
+        epochs = range(1, len(accuracies) + 1)
+        metrics_data = pd.DataFrame({
+            'Epoch': epochs,
+            'Accuracy': accuracies,
+            'Loss': losses
+        })
+
+        # Generate some example validation data
+        X_val = np.random.rand(20, 10)
+        y_val = np.random.randint(0, 2, 20)
+
+        # Make predictions
+        y_pred = model_ref.predict(X_val)
+        y_pred_proba = model_ref.predict_proba(X_val)
+
+        # Calculate accuracy and loss
+        accuracy = accuracy_score(y_val, y_pred)
+        loss = log_loss(y_val, y_pred_proba)
+
+        # Streamlit app
+        st.title('RandomForest Model Evaluation')
+
+        # Display results
+        st.write(f'Accuracy: {accuracy:.2f}')
+        st.write(f'Loss: {loss:.2f}')
+
+        # Line chart for Accuracy
+        st.subheader('Accuracy over Epochs')
+        st.line_chart(metrics_data[['Epoch', 'Accuracy']].set_index('Epoch'))
+
+        # Line chart for Loss
+        st.subheader('Loss over Epochs')
+        st.line_chart(metrics_data[['Epoch', 'Loss']].set_index('Epoch'))
         
 if __name__ == "__main__":
     main()

@@ -171,9 +171,13 @@ print(f'Accuracy: {accuracy}')
 # Showing which predictions were correct
 # dog_breeds[dog_breeds['breed'] == dog_breeds['predictions']]
 # %%
-joblib.dump(rf_classifier, 'model.pkl')
+# joblib.dump(rf_classifier, 'model.pkl')
 #%%
 joblib.dump(rf_classifier, 'orig_data_model.pkl')
+#%%
+# Save the model and metrics
+joblib.dump({'model': model, 'accuracies': accuracies, 'losses': losses}, 'random_forest_model_with_metrics.pkl')
+
 
 
 # %%
