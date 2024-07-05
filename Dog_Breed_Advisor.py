@@ -97,7 +97,7 @@ def main():
 
     from streamlit_extras.badges import badge  # pip install streamlit-extras
 
-    # badge(type="buymeacoffee", name="CodingIsFun")
+    # badge(type="buymeacoffee", name="lindaspellman")
 
     with st.sidebar:
         badge(type="buymeacoffee", name="lindaspellman")
@@ -109,7 +109,9 @@ def main():
     default_slider_value = 3
 
     # Load the model
-    model = joblib.load('orig_data_model.pkl')
+    # model = joblib.load('orig_data_model.pkl')
+    data = joblib.load('random_forest_model_with_metrics.pkl')
+    model = data['model']
     
     st.title('Dog Breed Advisor')
     st.subheader('By: Linda Spellman')
@@ -372,9 +374,8 @@ def main():
         # if any of the recs in the list are the same, rerun the model. Basically, I want a set of unique recs.
         st.write("If you like this application, please consider buying me a coffee. Thank you!")
 
-        model_ref = model['model']
-        accuracies = model['accuracies']
-        losses = model['losses']
+        accuracies = data['accuracies']
+        losses = data['losses']
 
         epochs = range(1, len(accuracies) + 1)
         metrics_data = pd.DataFrame({
@@ -388,8 +389,8 @@ def main():
         y_val = np.random.randint(0, 2, 20)
 
         # Make predictions
-        y_pred = model_ref.predict(X_val)
-        y_pred_proba = model_ref.predict_proba(X_val)
+        y_pred = model.predict(X_val)
+        y_pred_proba = model.predict_proba(X_val)
 
         # Calculate accuracy and loss
         accuracy = accuracy_score(y_val, y_pred)
