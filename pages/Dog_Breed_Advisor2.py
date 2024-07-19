@@ -95,7 +95,7 @@ def random_choice_between(num1, num2):
 
 def main():
     # Inject custom CSS with st.markdown function
-    st.markdown(custom_css, unsafe_allow_html=True)
+    # st.markdown(custom_css, unsafe_allow_html=True)
 
     from streamlit_extras.badges import badge  # pip install streamlit-extras
 
@@ -109,8 +109,8 @@ def main():
     default_slider_value = 3
 
     # Load the model
-    # model = joblib.load('orig_data_model.pkl')
-    model = joblib.load('synth_orig_data_model.pkl')
+    model = joblib.load('orig_data_model.pkl')
+    # model = joblib.load('synth_orig_data_model.pkl')
     # data = joblib.load('random_forest_model_with_metrics.pkl')
     # model = data['model']
     

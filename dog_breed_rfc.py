@@ -13,6 +13,7 @@ import joblib
 
 #%%
 # dog_breeds = pd.read_csv('C:\\Users\\Linda\\OneDrive\\Desktop\\BYUI\\2024_Spring_Senior_Project\\dog_breed_classifier\\dataset\\breeds.csv')
+# NOT USING RIGHT NOW
 synthetic_dog_breeds = pd.read_csv('C:\\Users\\Linda\\OneDrive\\Desktop\\BYUI\\2024_Spring_Senior_Project\\dog_breed_classifier\\dataset\\tabular-actgan-dog-breeds.csv')
 #%%
 # USING RIGHT NOW
@@ -25,7 +26,7 @@ dog_breeds = pd.concat([orig_dog_breeds, synthetic_dog_breeds], ignore_index=Tru
 
 #%%
 # USING RIGHT NOW
-dog_breeds = orig_dog_breeds
+# dog_breeds = orig_dog_breeds
 
 dog_breeds['both_family_kid_friendliness'] = dog_breeds[['b1_affectionate_with_family','b2_incredibly_kid_friendly_dogs']].mean(axis=1)
 
@@ -121,46 +122,55 @@ rf_classifier.fit(X_train, y_train)
 # Make predictions on the test set
 y_pred = rf_classifier.predict(X_test)
 
+#%%
+joblib.dump(rf_classifier, 'orig_data_model.pkl')
 
 
 # %%
 # Calculate accuracy
 accuracy = accuracy_score(y_test, y_pred)
-print(f'Accuracy: {accuracy}')
+
+# Print the accuracy
+def print_accuracy(accuracy):
+    print(f'Accuracy: {accuracy}')
+
+#%%
+joblib.dump(rf_classifier, 'synth_orig_data_model.pkl')
+
 
 #%%
 ###################### TESTING
 # Simulate training over multiple "epochs" using cross-validation
 # kf = StratifiedKFold(n_splits=2)
-accuracies = []
-losses = []
+# accuracies = []
+# losses = []
 
-for train_index, test_index in kf.split(X_train, y_train):
-    X_kf_train, X_kf_test = X_train[train_index], X_train[test_index]
-    y_kf_train, y_kf_test = y_train[train_index], y_train[test_index]
+# for train_index, test_index in kf.split(X_train, y_train):
+#     X_kf_train, X_kf_test = X_train[train_index], X_train[test_index]
+#     y_kf_train, y_kf_test = y_train[train_index], y_train[test_index]
     
-    rf_classifier.fit(X_kf_train, y_kf_train)
+#     rf_classifier.fit(X_kf_train, y_kf_train)
     
-    y_pred_proba = rf_classifier.predict_proba(X_kf_test)
-    y_pred = rf_classifier.predict(X_kf_test)
+#     y_pred_proba = rf_classifier.predict_proba(X_kf_test)
+#     y_pred = rf_classifier.predict(X_kf_test)
     
-    accuracy = accuracy_score(y_kf_test, y_pred)
-    loss = log_loss(y_kf_test, y_pred_proba)
+#     accuracy = accuracy_score(y_kf_test, y_pred)
+#     loss = log_loss(y_kf_test, y_pred_proba)
     
-    accuracies.append(accuracy)
-    losses.append(loss)
+#     accuracies.append(accuracy)
+#     losses.append(loss)
 
-# Save the model and metrics
-joblib.dump({'model': rf_classifier, 'accuracies': accuracies, 'losses': losses}, 'random_forest_model_with_metrics.pkl')
+# # Save the model and metrics
+# joblib.dump({'model': rf_classifier, 'accuracies': accuracies, 'losses': losses}, 'random_forest_model_with_metrics.pkl')
 
-epochs = range(1, len(accuracies) + 1)
+# epochs = range(1, len(accuracies) + 1)
 
-# Prepare data
-data = pd.DataFrame({
-    'Epoch': epochs,
-    'Accuracy': accuracies,
-    'Loss': losses
-})
+# # Prepare data
+# data = pd.DataFrame({
+#     'Epoch': epochs,
+#     'Accuracy': accuracies,
+#     'Loss': losses
+# })
 ####################################################
 
 
@@ -212,7 +222,6 @@ data = pd.DataFrame({
 # %%
 # joblib.dump(rf_classifier, 'model.pkl')
 #%%
-# joblib.dump(rf_classifier, 'orig_data_model.pkl')
 #%%
 # Save the model and metrics
 # joblib.dump({'model': model, 'accuracies': accuracies, 'losses': losses}, 'random_forest_model_with_metrics.pkl')
