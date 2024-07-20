@@ -98,7 +98,7 @@ def random_choice_between(num1, num2):
 
 def main():
     # Inject custom CSS with st.markdown function
-    st.markdown(custom_css, unsafe_allow_html=True)
+    # st.markdown(custom_css, unsafe_allow_html=True)
 
     # from streamlit_extras.badges import badge  # pip install streamlit-extras
 
