@@ -1,8 +1,17 @@
 # streamlit run <filename>
+#%%
+import sklearn
+print(sklearn.__version__)
 
+#%%
+import joblib 
+other_temp_model = joblib.load('orig_data_model.pkl')
+print("hello model")
+
+#%%
 import os
-# import dog_breed_rfc
-# from dog_breed_rfc import orig_dog_breeds
+import dog_breed_rfc
+from dog_breed_rfc import orig_dog_breeds
 import numpy as np
 import pandas as pd
 import random
@@ -112,6 +121,7 @@ def main():
 
     # Load the model
     model = joblib.load('orig_data_model.pkl')
+
     # model = joblib.load('synth_orig_data_model.pkl')
     # data = joblib.load('random_forest_model_with_metrics.pkl')
     # model = data['model']

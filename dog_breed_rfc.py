@@ -236,3 +236,7 @@ print("hello model")
 # downgrade scikit-learn to 1.2.2
 # rerun training job to make sure it still works and that it works in test program and also the streamlit script
 # %%
+import sklearn
+print(sklearn.__version__)
+
+# %%
