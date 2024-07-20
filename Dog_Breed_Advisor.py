@@ -3,7 +3,6 @@
 import os
 # import dog_breed_rfc
 # from dog_breed_rfc import orig_dog_breeds
-import joblib
 import numpy as np
 import pandas as pd
 import random
@@ -16,6 +15,8 @@ try:
 except ImportError:
     os.system('pip install streamlit')
     import streamlit as st
+
+import joblib
 
 # Custom CSS
 custom_css = """
