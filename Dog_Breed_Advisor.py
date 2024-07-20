@@ -9,9 +9,9 @@ import pandas as pd
 import random
 import sklearn.metrics  
 from sklearn.metrics import accuracy_score, log_loss
-import streamlit_extras as stx
-import stx.buy_me_a_coffee
-from stx.buy_me_a_coffee import badge  # pip install streamlit-extras
+import streamlit_extras # as stx
+# import stx.buy_me_a_coffee
+from streamlit_extras.badges import badge  # pip install streamlit-extras
 import joblib
 
 try:
