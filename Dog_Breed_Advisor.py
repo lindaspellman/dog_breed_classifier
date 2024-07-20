@@ -83,7 +83,6 @@ custom_css = """
 # function to run model with user input
 def predict_optimal_dog_breeds(model, size, num_dogs_had, home_size, alone_dogs, sensitivity, cold_weather, hot_weather, child_friendly, dog_friendly, stranger_friendly, shedding_amount, drooling_potential, groom_ease, weight_gain_potential, trainability, intelligence, mouthiness, prey_drive, barking, wanderlust_potential, en_lvl, intensity, ex_needs, playfulness):
     data = np.array([[num_dogs_had, home_size, alone_dogs, sensitivity, cold_weather, hot_weather, dog_friendly, stranger_friendly, shedding_amount, drooling_potential, groom_ease, weight_gain_potential, trainability, intelligence, mouthiness, prey_drive, barking, wanderlust_potential, en_lvl, intensity, ex_needs, playfulness,size,child_friendly]])
-    # model = joblib.load('model.pkl')
     prediction = model.predict(data)
     return prediction
 
