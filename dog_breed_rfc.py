@@ -22,11 +22,11 @@ orig_dog_breeds = pd.read_csv('C:\\Users\\Linda\\OneDrive\\Desktop\\BYUI\\2024_S
 
 #%%
 # NOT USING RIGHT NOW
-dog_breeds = pd.concat([orig_dog_breeds, synthetic_dog_breeds], ignore_index=True)
+# dog_breeds = pd.concat([orig_dog_breeds, synthetic_dog_breeds], ignore_index=True)
 
 #%%
 # USING RIGHT NOW
-# dog_breeds = orig_dog_breeds
+dog_breeds = orig_dog_breeds
 
 dog_breeds['both_family_kid_friendliness'] = dog_breeds[['b1_affectionate_with_family','b2_incredibly_kid_friendly_dogs']].mean(axis=1)
 
@@ -131,8 +131,8 @@ joblib.dump(rf_classifier, 'orig_data_model.pkl')
 accuracy = accuracy_score(y_test, y_pred)
 
 # Print the accuracy
-def print_accuracy(accuracy):
-    print(f'Accuracy: {accuracy}')
+# def print_accuracy(accuracy):
+print(f'Accuracy: {accuracy}')
 
 #%%
 joblib.dump(rf_classifier, 'synth_orig_data_model.pkl')
