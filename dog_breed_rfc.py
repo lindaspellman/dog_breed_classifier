@@ -229,10 +229,10 @@ joblib.dump(rf_classifier, 'synth_orig_data_model.pkl')
 
 
 # %%
-temp_model = joblib.load('model.pkl')
+# temp_model = joblib.load('model.pkl')
 #%%
-other_temp_model = joblib.load('orig_data_model.pkl')
-print("hello model")
+# other_temp_model = joblib.load('orig_data_model.pkl')
+# print("hello model")
 # downgrade scikit-learn to 1.2.2
 # rerun training job to make sure it still works and that it works in test program and also the streamlit script
 # %%

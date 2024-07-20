@@ -1,12 +1,4 @@
 # streamlit run <filename>
-#%%
-import sklearn
-print(sklearn.__version__)
-
-#%%
-import joblib 
-other_temp_model = joblib.load('orig_data_model.pkl')
-print("hello model")
 
 #%%
 import os
