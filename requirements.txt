@@ -3,5 +3,5 @@ numpy
 streamlit
 scikit-learn
 matplotlib
-streamlit_extras==0.4.0
+streamlit_extras
 joblib
