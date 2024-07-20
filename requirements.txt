@@ -1,1 +1,8 @@
+os
+streamlit
+numpy
+sklearn
+pandas
+random
+streamlit_extras.buy_me_a_coffee
 joblib
