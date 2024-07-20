@@ -1,7 +1,7 @@
 pandas
 numpy
-streamlit 
+streamlit
 scikit-learn
 matplotlib
-streamlit_extras
+streamlit_extras==0.4.0
 joblib

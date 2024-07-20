@@ -9,16 +9,17 @@ import pandas as pd
 import random
 import sklearn.metrics  
 from sklearn.metrics import accuracy_score, log_loss
+import streamlit_extras as stx
+import stx.buy_me_a_coffee
+from stx.buy_me_a_coffee import badge  # pip install streamlit-extras
+import joblib
 
-#%%
 try:
     import streamlit as st 
 except ImportError:
     os.system('pip install streamlit')
     import streamlit as st
-import streamlit_extras.buy_me_a_coffee
-from streamlit_extras.buy_me_a_coffee import button  # pip install streamlit-extras
-import joblib
+
 
 # Custom CSS
 custom_css = """
@@ -99,7 +100,7 @@ def main():
     # Inject custom CSS with st.markdown function
     st.markdown(custom_css, unsafe_allow_html=True)
 
-    from streamlit_extras.badges import badge  # pip install streamlit-extras
+    # from streamlit_extras.badges import badge  # pip install streamlit-extras
 
     with st.sidebar:
         badge(type="buymeacoffee", name="lindaspellman")
