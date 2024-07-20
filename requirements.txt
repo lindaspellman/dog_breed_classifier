@@ -2,5 +2,5 @@ pandas
 numpy
 streamlit 
 scikit-learn
-streamlit_extras.buy_me_a_coffee
+streamlit_extras
 joblib
