@@ -6,7 +6,6 @@ import os
 import numpy as np
 import pandas as pd
 import random
-from streamlit_extras.buy_me_a_coffee import button  # pip install streamlit-extras
 from sklearn.metrics import accuracy_score, log_loss
 
 #%%
@@ -16,6 +15,7 @@ except ImportError:
     os.system('pip install streamlit')
     import streamlit as st
 
+from streamlit_extras.buy_me_a_coffee import button  # pip install streamlit-extras
 import joblib
 
 # Custom CSS
