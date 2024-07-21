@@ -20,64 +20,6 @@ except ImportError:
     os.system('pip install streamlit')
     import streamlit as st
 
-
-# Custom CSS
-custom_css = """
-<style>
-    # USING ################################################
-
-    /* Change the background color of the app */
-    /* In first div under <div tabindex="-1"> */
-    .stApp {
-        # background-color: #003300;
-        # background-color: #ffe6ff;
-        background-color: #f2e6ff;
-    }
-
-    # NOT USING #############################################
-
-    /* Change the font color of all streamlit text */
-    * {
-        # color: #ff6666;
-        # color: #ff4d4d;
-        # color: #ff1a1a;
-        # color: #ffcc99;
-        color: #ffffff;
-        }
-
-    /* changes the background color of the re-run ect developer bar at the top of the window which will not be shown after the application is deployed. Not useful for deployment. */
-    /* In the first header within the above div */
-    .st-emotion-cache-1avcm0n {
-        # color: azure; /* very pale blue */
-    }
-
-    .st-emotion-cache-13k62yr {
-        # color: #ff6699; /* changes the text color of the re-run ect text in the developer bar at the top of the window which will not be shown after the application is deployed, as well as the text paragraphs. Not useful for deployment. */
-
-        # background: #ffe6ee; /* Not using. This can also change the background color like .stApp is doing */
-    }
-    
-    /* changes color of first two paragraphs */
-    /* .element-container { */
-    .st-emotion-cache-uiblw7 e1f1d6gn4 {
-        color: #ff6699;
-    }
-
-    /* changes text color of the submit button */
-    .stButton {
-        # color: #cc0044;
-    }
-
-    /* changes background color of the submit button */
-    .st-emotion-cache-19rxjzo {
-        # color: #cc0044;
-        # background-color: #ff6699;
-        # background-color: azure;
-        # background-color: robinseggblue;
-    }
-</style>
-"""
-
 # speeds up processing by caching slider data
 # @st.cache_data
 
@@ -90,17 +32,7 @@ def predict_optimal_dog_breeds(model, size, num_dogs_had, home_size, alone_dogs,
 def random_choice_between(num1, num2):
     return random.choice([num1, num2])
 
-# def display_breed_prediction_info(breed_prediction):
-#     breeds_original = pd.read_csv('C:\\Users\\Linda\\OneDrive\\Desktop\\BYUI\\2024_Spring_Senior_Project\\dog_breed_classifier\\dataset\\breeds_original.csv')
-#     breed_location = breeds_original['breed'] == str(breed_prediction)
-#     breed_url = breeds_original.loc[breed_location, 'url']
-#     return breed_url
-
 def main():
-    # Inject custom CSS with st.markdown function
-    # st.markdown(custom_css, unsafe_allow_html=True)
-
-    # from streamlit_extras.badges import badge  # pip install streamlit-extras
 
     with st.sidebar:
         badge(type="buymeacoffee", name="lindaspellman")
@@ -113,10 +45,6 @@ def main():
 
     # Load the model
     model = joblib.load('orig_data_model.pkl')
-
-    # model = joblib.load('synth_orig_data_model.pkl')
-    # data = joblib.load('random_forest_model_with_metrics.pkl')
-    # model = data['model']
     
     st.title('Dog Breed Advisor')
     st.subheader('By: Linda Spellman')
@@ -183,8 +111,6 @@ def main():
     # e4_potential_for_playfulness
     playfulness = st.slider("24. On a scale of 1-5, how interested are you in playing with your dog and how much time do you have to spend playing with your dog? Would you prefer a more playful dog or less playful dog? 1. Less playful. 5: More playful.", min_slider_value, max_slider_value, default_slider_value)
 
-    # breed_recs = []
-    # breed_urls = []
     breeds_original = pd.read_csv('C:\\Users\\Linda\\OneDrive\\Desktop\\BYUI\\2024_Spring_Senior_Project\\dog_breed_classifier\\dataset\\breeds_original.csv')
 
     preferences_submitted = st.button('Submit', key=1)
@@ -193,22 +119,10 @@ def main():
         st.write(f'Your dog breed recommendations are: ')
         # send all answers to the model
         breed_rec = predict_optimal_dog_breeds(model, size, num_dogs_had, home_size, alone_dogs, sensitivity, cold_weather, hot_weather, child_friendly, dog_friendly, stranger_friendly, shedding_amount, drooling_potential, groom_ease, weight_gain_potential, trainability, intelligence, mouthiness, prey_drive, barking, wanderlust_potential, en_lvl, intensity, ex_needs, playfulness)
-        # st.write(breed_rec)
-        # breed_recs.append(breed_rec)
-        # for rec in breed_recs:
-            # st.write(rec)
+        
         condition = breeds_original['breed'] == str(breed_rec[0])
         breed_url = breeds_original.loc[condition, 'url']
         
-        # st.write(breed_url)
-            # breed_urls.append(breed_url)
-        # for url in breed_urls:
-            # st.write(url)
-        # st.write(breed_rec)
-        
-        # st.write(breed_url)
-
-        # for i in range(1,5):
         breed_rec2 = predict_optimal_dog_breeds(model, size
                                             +random_choice_between(-1,1)
                                             , num_dogs_had
@@ -347,37 +261,10 @@ def main():
         
         rec_url5 = pd.DataFrame({'breed': [breed_rec5[0]], 'url': breed_url5})
         st.dataframe(rec_url5, hide_index=True, use_container_width=True)
-            # breed_recs.append(breed_rec)
-            ###################
-            # st.write(breed_rec)
-            # breed_location = breeds_original['breed'] == str(breed_rec)
-            # breed_url = breeds_original.loc[breed_location, 'url']
-            # st.write(breed_url)
-    ##########################
-
-            # breed_dict = dict.fromkeys(f'{breed_recs}')
-            # breed_dict[i] = breed_url
-            # breed_urls.append(breed_url)
-
 
             # TODO: replace lists with dictionary using .fromkeys() method?
             # TODO: write get_url() function to get the url from the breed name?
 
-        # st.write(breed_recs)
-        # st.write(breed_urls)
-        # st.write(breed_dict)
-
-        # loop through breed_recs and print out the breed name and url
-
-        # for index, rec in enumerate(breed_recs):
-        # for index, rec in enumerate(breed_dict):
-        # for rec in breed_rec:
-            # breed_url = display_breed_prediction_info(rec)
-            # st.write(f'{index+1}. {rec}')
-            # for url in breed_urls:
-                # st.write(url)
-
-            # st.write(breed_url)
 
         st.write("Find information about these breeds at the above urls. Machine learning models can be wrong, so please research the breeds as much as possible before adopting. Please adopt, don't shop!")
         st.divider() 
@@ -386,8 +273,9 @@ def main():
         badge(type="buymeacoffee", name="lindaspellman")
 
 
-        # if any of the recs in the list are the same, rerun the model. Basically, I want a set of unique recs.
+        # TODO: If any of the recs in the list are the same, rerun the model. Basically, I want a set of unique recs.
 
+        # TODO: visualize accuracies and losses of the model
         # accuracies = data['accuracies']
         # losses = data['losses']
 
